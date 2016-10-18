@@ -918,6 +918,13 @@
                 element.className = element.className
                 .replace(reg, " ")
                 .replace(/(^\s*)|(\s*$)/g, "");
+
+                if (element.firstChild && element.firstChild.className) {
+                    element.firstChild.className = element.firstChild.className
+                    .replace(reg, " ")
+                    .replace(/(^\s*)|(\s*$)/g, "");                    
+                }
+
             }
         };
 
@@ -1245,7 +1252,7 @@
 
     // Choose image
     _chooseImage = function (element, captcha, event) {
-        var image = (event.currentTarget) ? event.currentTarget : event.srcElement,
+        var image = (event.currentTarget) ? event.currentTarget : event.srcElement.parentElement,
             possibilitiesWrapper = helpers.findByClass(element, 'visualCaptcha-possibilities', true),
             explanation = helpers.findByClass(element, 'visualCaptcha-explanation', true),
             imgElement,
