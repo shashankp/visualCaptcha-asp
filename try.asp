@@ -1,6 +1,8 @@
 ﻿<%@ Language="VBScript" %>
 <%
-For Each item In Request.Form
-    Response.Write "Key: " & item & " - Value: " & Request.Form(item) & "<BR />"
-Next    
+If Request.Form(Session("imageFieldName")) = Session("validImageOption") Then
+    Response.Write "OK"
+Else
+    Response.Write "Fail"
+End If
 %>

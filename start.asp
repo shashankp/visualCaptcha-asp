@@ -17,6 +17,12 @@ Next
 
 Session("images") = selectedImages
 
+Set frontendDataFile = fs.OpenTextFile(Server.MapPath("start.json"),1,false)
+Set frontendDataJson = JSON.parse(frontendDataFile.ReadAll)
+Session("frontendData") = frontendDataJson
+
+Session("validImageOption") = "3ddd5c563e533e8453bb4972611c5793391d962f"
+Session("imageFieldName") = "37d251b7f67da50ee1ea56750bdd40ec9b757277"
 
 Set stream = Server.CreateObject("ADODB.Stream")    
 stream.Type = 1
