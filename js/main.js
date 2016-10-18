@@ -10,7 +10,7 @@
                     var anchorList = Array.prototype.slice.call( anchorOptions );// .getElementsByTagName does not return an actual array
                     anchorList.forEach( function( anchorItem ) {
                         _bindClick( anchorItem, function( event ) {
-                            event.preventDefault();
+                            event.preventDefault ? event.preventDefault() : (event.returnValue = false);
                         });
                     });
                 }
@@ -49,7 +49,7 @@
 
     // Show an alert saying if visualCaptcha is filled or not
     var _sayIsVisualCaptchaFilled = function( event ) {
-        event.preventDefault();
+        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 
         if ( captcha.getCaptchaData().valid ) {
             window.alert( 'visualCaptcha is filled!' );

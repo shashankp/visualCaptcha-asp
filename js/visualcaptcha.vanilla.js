@@ -860,7 +860,7 @@
             return first ? items[0] : Array.prototype.slice.call(items);
         };
 
-        var getElementsByClassName1 = function(element, className) {
+        var getElementsByClassName = function (element, className) {
             var found = [];
             var elements = element.getElementsByTagName("*");
             for (var i = 0; i < elements.length; i++) {
@@ -873,9 +873,7 @@
         }
 
         _findByClass = function (element, className, first) {
-            //var elements = element.getElementsByClassName(className);
-            //var elements = getElementsByClassName1(element, className);
-            var elements = getElementsByClassName(className,'div',element);
+            var elements = getElementsByClassName(element, className);
             return _firstOrArray(elements, first);
         };
 
@@ -976,7 +974,7 @@
             params;
 
             btnAccessibility =
-            '<div class="visualCaptcha-accessibility-button" id="visualCaptcha-accessibility-button">' +
+            '<div class="visualCaptcha-accessibility-button">' +
                 '<a href="#"><img src="{path}accessibility{retinaExtra}.png" title="{accessibilityTitle}" alt="{accessibilityAlt}" /></a>' +
             '</div>';
 
@@ -1177,8 +1175,10 @@
         element.innerHTML = captchaHTML;
 
         // Bind accessibility button
-        selected = helpers.findByClass(element, 'visualCaptcha-accessibility-button', true);
-        helpers.bindClick(selected, _toggleAccessibility.bind(null, element, captcha));
+        if (captcha.supportsAudio()) {
+            selected = helpers.findByClass(element, 'visualCaptcha-accessibility-button', true);
+            helpers.bindClick(selected, _toggleAccessibility.bind(null, element, captcha));            
+        }
 
         // Bind refresh button
         selected = helpers.findByClass(element, 'visualCaptcha-refresh-button', true);
@@ -1245,7 +1245,7 @@
 
     // Choose image
     _chooseImage = function (element, captcha, event) {
-        var image = event.currentTarget,
+        var image = (event.currentTarget) ? event.currentTarget : event.srcElement,
             possibilitiesWrapper = helpers.findByClass(element, 'visualCaptcha-possibilities', true),
             explanation = helpers.findByClass(element, 'visualCaptcha-explanation', true),
             imgElement,
@@ -1271,6 +1271,7 @@
 
         // Get the image index
         imgElement = helpers.findByTag(image, 'img', true);
+        imgElement = imgElement ? imgElement : image;
         imageIndex = parseInt(imgElement.getAttribute('data-index'), 10);
 
         // Build the input HTML
