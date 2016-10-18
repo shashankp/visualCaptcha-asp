@@ -11,7 +11,7 @@ Dim selectedImages(5)
 For i = 0 To 4
     'Randomize
     'Response.Write Int(Rnd*imagesJson.length)
-    'Response.Write imagesJson.[Int(Rnd*imagesJson.length)].name
+    'Response.Write imagesJson.[0].name
     selectedImages(i) = imagesJson.shift().name
 Next 
 

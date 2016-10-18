@@ -860,9 +860,22 @@
             return first ? items[0] : Array.prototype.slice.call(items);
         };
 
-        _findByClass = function (element, className, first) {
-            var elements = element.getElementsByClassName(className);
+        var getElementsByClassName1 = function(element, className) {
+            var found = [];
+            var elements = element.getElementsByTagName("*");
+            for (var i = 0; i < elements.length; i++) {
+                var names = elements[i].className.split(' ');
+                for (var j = 0; j < names.length; j++) {
+                    if (names[j] == className) found.push(elements[i]);
+                }
+            }
+            return found;
+        }
 
+        _findByClass = function (element, className, first) {
+            //var elements = element.getElementsByClassName(className);
+            //var elements = getElementsByClassName1(element, className);
+            var elements = getElementsByClassName(className,'div',element);
             return _firstOrArray(elements, first);
         };
 
@@ -963,7 +976,7 @@
             params;
 
             btnAccessibility =
-            '<div class="visualCaptcha-accessibility-button">' +
+            '<div class="visualCaptcha-accessibility-button" id="visualCaptcha-accessibility-button">' +
                 '<a href="#"><img src="{path}accessibility{retinaExtra}.png" title="{accessibilityTitle}" alt="{accessibilityAlt}" /></a>' +
             '</div>';
 
